@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgresql:postgresql@db:5432/database"
+}
+
+model Plant {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String
+  createdAt DateTime @default(now())
+}

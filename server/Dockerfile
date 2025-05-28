@@ -1,18 +1,12 @@
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
+FROM node:18-alpine
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
+WORKDIR /usr/src/app
 
-COPY src ./src
+COPY . ./
+RUN npm install
 
-RUN mvn package -DskipTests
-
-FROM eclipse-temurin:17-jdk
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
+COPY . .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["npm", "run", "start:dev"]
